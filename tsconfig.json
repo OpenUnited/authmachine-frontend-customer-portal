@@ -22,7 +22,7 @@
     "jsx": "react",
     "outDir": "./dist",
     "noImplicitAny": true,
-    "noEmit": true
+//    "noEmit": false
   },
   "include": [
     "src"

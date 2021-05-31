@@ -1,0 +1,19 @@
+.logo-header img.full-logo {
+    content: url("../custom-brand/assets/images/open-united-logo.svg");
+    height: 26px;
+}
+.auth-page-container .form-container .logo {
+    content: url("../custom-brand/assets/images/open-united-logo.svg");
+}
+.logo-header img.small-logo {
+    content: url("../custom-brand/assets/images/open-united-sm-logo.png");
+    height: 26px;
+}
+.auth-page-container {
+    background: url("../custom-brand/assets/images/open-united-bg.jpg") center center / cover no-repeat !important;
+}
+
+
+input[type='email'] {
+    -webkit-appearance: none;
+}

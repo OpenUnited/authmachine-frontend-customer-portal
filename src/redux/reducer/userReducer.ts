@@ -69,7 +69,8 @@ type ActionType = {
     data: any[],
     status: boolean,
     message?: string,
-    infoStatus: {status: boolean, message: string}
+    infoStatus: {status: boolean, message: string},
+    step: number
 }
 
 const userReducer = (state = initialState, action: ActionType) => {

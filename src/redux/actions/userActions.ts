@@ -67,6 +67,48 @@ const auth = () => {
     }
 };
 
+const register = (values: {
+    username: string,
+    email: string,
+    fullName: string,
+    password: string,
+    additionalRegistrationData?: any,
+}) => {
+    const {username, email, fullName, password, additionalRegistrationData} = values;
+    return (dispatch: AppDispatch) => {
+        let query = `mutation {
+          register(input: {
+            username: "${username ? username : fullName}",
+            email: "${email}",
+            fullName: "${fullName}",
+            password: "${password ? password : ""}"
+            ${additionalRegistrationData ? `additionalRegistrationData: ${JSON.stringify(JSON.stringify(additionalRegistrationData))}` : ""}
+          }) {
+            success, message
+          }
+        }`;
+
+        const setRegister = (status: boolean, message: string = "") =>
+            dispatch({
+                type: userTypes.USER_REGISTER,
+                status,
+                message
+            });
+
+        request.postWithoutErrors(
+            dispatch,
+            query,
+            (result: any) => {
+                let {success, message} = result.data.register;
+                setRegister(success, message);
+            },
+            (error: any) => {
+                error = request.isServerError(error);
+                setRegister(false, error);
+            });
+    }
+};
+
 const logout = () => {
     return (dispatch: AppDispatch) => {
         let query = `mutation {

@@ -41,8 +41,6 @@ const SignIn = (props: SignInProps) => {
         return () => {
             localStorage.removeItem("nextUrl");
         }
-
-
     }, [props.location]);
 
     useEffect(() => {
