@@ -154,9 +154,9 @@ const RegisterLandingPage = ({message, isRegister, register, setPageTitle}: Regi
 };
 
 const mapStateToProps = (state: any) => {
-    const {registerMessage, isRegister} = state.user;
+    const {message, isRegister} = state.user;
     return {
-        message: registerMessage, isRegister
+        message: message, isRegister
     }
 };
 

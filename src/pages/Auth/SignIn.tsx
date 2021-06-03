@@ -5,17 +5,26 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {userActions} from "../../redux/actions/userActions";
 import {SignInProps} from "../../interfaces/auth/signIn";
-import SocialAccounts from "../../components/Auth/SocialAccounts";
+// import SocialAccounts from "../../components/Auth/SocialAccounts";
 import {mainActions} from "../../redux/actions/mainActions";
-import BackIcon from "../../components/Icons/BackIcon/BackIcon";
-import CrossIcon from "../../components/Icons/CrossIcon/CrossIcon";
+// import BackIcon from "../../components/Icons/BackIcon/BackIcon";
+// import CrossIcon from "../../components/Icons/CrossIcon/CrossIcon";
 import Switcher from "../../components/Auth/Switcher/Switcher";
 import FormInput from "../../components/Auth/FormInput/FormInput";
 import '../../components/Auth/Auth.scss';
 import MessageLabel from "../../components/Auth/MessageLabel/MessageLabel";
 
 const SignIn = (props: SignInProps) => {
-    const {login, isAuthenticated, message, setPageTitle, setSystemInformation, status, registerStep, changeRegisterStep} = props;
+    const {
+        login,
+        isAuthenticated,
+        message,
+        setPageTitle,
+        setSystemInformation,
+        status,
+        registerStep,
+        changeRegisterStep
+    } = props;
     const [form] = Form.useForm();
 
     useEffect(() => setPageTitle("Sign In"), [setPageTitle]);
@@ -38,9 +47,6 @@ const SignIn = (props: SignInProps) => {
     useEffect(() => {
         let nextUrl = new URLSearchParams(props.location.search).get("next");
         if (nextUrl) localStorage.setItem("nextUrl", nextUrl);
-        return () => {
-            localStorage.removeItem("nextUrl");
-        }
     }, [props.location]);
 
     useEffect(() => {
@@ -120,17 +126,16 @@ const SignIn = (props: SignInProps) => {
 };
 
 const mapStateToProps = (state: any) => {
-        const {isAuthenticated, loginMessage, status, registerStep} = state.user;
-        const {systemInfo} = state.main;
-        return {
-            isAuthenticated,
-            message: loginMessage,
-            systemInfo,
-            status,
-            registerStep
-        }
+    const {isAuthenticated, loginMessage, status, registerStep} = state.user;
+    const {systemInfo} = state.main;
+    return {
+        isAuthenticated,
+        message: loginMessage,
+        systemInfo,
+        status,
+        registerStep
     }
-;
+}
 
 const mapDispatchToProps = {
     login: userActions.login,

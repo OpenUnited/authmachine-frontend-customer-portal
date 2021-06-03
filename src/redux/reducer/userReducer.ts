@@ -16,9 +16,8 @@ type UserState = {
     features: string[],
     policies: any[],
     eventsExists: boolean,
-    message: string,
     registerStep: number,
-    registerMessage: string,
+    message: string,
     loginMessage: string,
     activateMessage: string,
     operationStatus: boolean,
@@ -30,7 +29,9 @@ type UserState = {
     newLicenseData: infoStatusResponse,
     activateLicenseData: infoStatusResponse,
     createAdminUserData: infoStatusResponse,
-    userId: string
+    userId: string,
+    resetStep: number,
+    resetId: string
 }
 
 const initialState: UserState = {
@@ -45,7 +46,6 @@ const initialState: UserState = {
     eventsExists: false,
     message: "",
     registerStep: 0,
-    registerMessage: "",
     loginMessage: "",
     activateMessage: "",
     operationStatus: false,
@@ -56,21 +56,24 @@ const initialState: UserState = {
     newLicenseData: emptyMessage,
     activateLicenseData: emptyMessage,
     createAdminUserData: emptyMessage,
-    userId: ""
+    userId: "",
+    resetStep: 0,
+    resetId: ""
 }
 
 type ActionType = {
     type: string,
     user: { username: string, id: number, avatar: string, isSuperuser: boolean },
     registerStep?: number,
-    registerMessage?: string,
+    message?: string,
     id?: string
     isAuthenticated?: boolean,
     data: any[],
     status: boolean,
-    message?: string,
-    infoStatus: {status: boolean, message: string},
-    step: number
+    infoStatus: { status: boolean, message: string },
+    step: number,
+    resetStep: number,
+    resetId: string
 }
 
 const userReducer = (state = initialState, action: ActionType) => {
@@ -120,7 +123,7 @@ const userReducer = (state = initialState, action: ActionType) => {
             return {
                 ...state,
                 isRegister: action.status,
-                registerMessage: action.message
+                message: action.message
             }
         case userTypes.RESET_PASSWORD:
         case userTypes.RECOVERY_PASSWORD:
@@ -182,34 +185,51 @@ const userReducer = (state = initialState, action: ActionType) => {
             return {
                 ...state,
                 id: action.id,
-                registerMessage: action.message,
+                message: action.message,
                 registerStep: action.registerStep
             }
         case userTypes.REGISTER_STEP_TWO:
             return {
                 ...state,
                 id: action.id,
-                registerMessage: action.message,
+                message: action.message,
                 registerStep: action.registerStep
             }
         case userTypes.REGISTER_STEP_THREE:
             return {
                 ...state,
-                registerMessage: action.message,
-                registerStep: action.registerStep,
-                message: action.message
+                message: action.message,
+                registerStep: action.registerStep
             }
         case userTypes.CHANGE_MESSAGE:
             return {
                 ...state,
-                registerMessage: action.message,
-                message: action.message
+                message: action.message,
             }
         case userTypes.CHANGE_STEP:
             return {
                 ...state,
                 registerStep: action.registerStep,
-                registerMessage: action.registerMessage
+                message: action.message
+            }
+        case userTypes.RESET_PASSWORD_:
+            return {
+                ...state,
+                resetStep: action.resetStep,
+                message: action.message,
+                resetId: action.resetId
+            }
+        case userTypes.RESET_PASSWORD_STEP_THREE:
+            return {
+                ...state,
+                resetStep: action.resetStep,
+                message: action.message
+            }
+        case userTypes.CHANGE_RESET_STEP:
+            return {
+                ...state,
+                resetStep: action.resetStep,
+                message: action.message
             }
         default:
             return state;

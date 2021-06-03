@@ -14,7 +14,8 @@ interface RegistrationProps {
 interface RegistrationStepsProps {
     isRegister: boolean,
     step: number,
-    setPageTitle: (pageTitle: string) => void
+    setPageTitle: (pageTitle: string) => void,
+    changeMessage: (message: string) => void
 }
 
 interface RegisterStepOneProps {
@@ -37,7 +38,8 @@ interface RegisterStepTwoProps {
     message: string,
     id: string,
     changeMessage: (message: string) => void,
-    changeStep: (step: number, message: string) => void
+    changeStep: (step: number, message: string) => void,
+    activationFailed: (userId: string) => void
 }
 
 interface RegisterStepThreeProps {
@@ -48,10 +50,16 @@ interface RegisterStepThreeProps {
         userId: string,
         username: string,
         password: string
-    }) => void,
+    }, nextUrl: string | null) => void,
     changeMessage: (message: string) => void,
     id: string
 }
 
 
-export type {RegisterStepOneProps, RegisterStepTwoProps, RegisterStepThreeProps, RegistrationStepsProps, RegistrationProps};
+export type {
+    RegisterStepOneProps,
+    RegisterStepTwoProps,
+    RegisterStepThreeProps,
+    RegistrationStepsProps,
+    RegistrationProps
+};

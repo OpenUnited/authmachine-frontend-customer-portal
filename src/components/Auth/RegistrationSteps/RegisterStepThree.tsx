@@ -22,7 +22,8 @@ const RegisterStepThree = ({register, isRegister, message, changeMessage, id, st
         } else if (values.password !== values.confirmPassword) {
             changeMessage("The passwords entered do not match!");
         } else {
-            register({...values, userId: id});
+            let nextUrl = localStorage.getItem('nextUrl') ? localStorage.getItem('nextUrl') : null;
+            register({...values, userId: id}, nextUrl);
         }
     };
 
@@ -99,9 +100,9 @@ const RegisterStepThree = ({register, isRegister, message, changeMessage, id, st
 };
 
 const mapStateToProps = (state: any) => {
-    const {registerMessage, isRegister, id, status} = state.user;
+    const {message, isRegister, id, status} = state.user;
     return {
-        message: registerMessage,
+        message: message,
         isRegister,
         id,
         status

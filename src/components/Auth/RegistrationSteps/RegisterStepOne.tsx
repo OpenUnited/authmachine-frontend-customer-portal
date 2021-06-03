@@ -17,7 +17,7 @@ const RegisterStepOne = ({register, isRegister, message, status}: RegisterStepOn
 
     return (
         <Form form={form} onFinish={onFinish}>
-            <Form.Item className="text-center">
+            <Form.Item style={{marginTop: 20}} className="text-center">
                 <Typography.Text>
                     Let's start with your first name and email address.
                 </Typography.Text>
@@ -25,7 +25,7 @@ const RegisterStepOne = ({register, isRegister, message, status}: RegisterStepOn
             {message !== "" ? (
                 <MessageLabel level={isRegister ? "success" : "error"} message={message}/>
             ) : null}
-            <Form.Item
+            <Form.Item style={{marginTop: 20}}
                 name="firstName"
                 rules={[
                     {required: true, message: "Please input your first name"},
@@ -34,7 +34,7 @@ const RegisterStepOne = ({register, isRegister, message, status}: RegisterStepOn
                 <FormInput label="First name" type="text" name="firstName" placeholder="First name"/>
             </Form.Item>
 
-            <Form.Item
+            <Form.Item style={{marginTop: 20}}
                 name="email"
                 rules={[{required: true, message: "Please input your email"}]}
             >
@@ -54,9 +54,9 @@ const RegisterStepOne = ({register, isRegister, message, status}: RegisterStepOn
 }
 
 const mapStateToProps = (state: any) => {
-    const {registerMessage, isRegister,status} = state.user;
+    const {message, isRegister,status} = state.user;
     return {
-        message: registerMessage,
+        message: message,
         isRegister,
         status
     };

@@ -13,10 +13,14 @@ import RegisterStepOne from "../../components/Auth/RegistrationSteps/RegisterSte
 import RegisterStepTwo from "../../components/Auth/RegistrationSteps/RegisterStepTwo";
 import RegisterStepThree from "../../components/Auth/RegistrationSteps/RegisterStepThree";
 import RegisterSuccess from "../../components/Auth/RegistrationSteps/RegisterSuccess";
+import {userActions} from "../../redux/actions/userActions";
 
-const RegistrationSteps = ({step, setPageTitle}: RegistrationStepsProps) => {
+const RegistrationSteps = ({step, setPageTitle, changeMessage}: RegistrationStepsProps) => {
 
-    useEffect(() => setPageTitle("Register"), [setPageTitle]);
+    useEffect(() => {
+        setPageTitle("Register");
+        changeMessage('');
+    }, [setPageTitle]);
 
     const stepForms = {
         0: <RegisterStepOne/>,
@@ -68,5 +72,6 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = {
     setPageTitle: mainActions.setPageTitle,
+    changeMessage: userActions.changeMessage
 }
 export default connect(mapStateToProps, mapDispatchToProps)(RegistrationSteps);

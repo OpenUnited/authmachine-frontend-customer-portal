@@ -25,7 +25,6 @@ function StepTemplate({step, description, valid, current}: StepProps) {
 }
 
 const StepWidget = ({first, second, third, step}: StepSwitcherProps) => {
-    console.log(step);
     return (
         <div className="container">
             <div className="steps-bar-wrapper">

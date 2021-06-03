@@ -1,36 +1,41 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import Logo from "../../staticfiles/images/logo.png"
-import {Form, Input, Typography, Button, Alert, Checkbox} from "antd";
 import {RootState} from "../../redux/reducer";
-import {userActions} from "../../redux/actions/userActions";
 import {ResetPasswordProps} from "../../interfaces/auth/resetPassword";
 import {mainActions} from "../../redux/actions/mainActions";
 // import BackIcon from "../../components/Icons/BackIcon/BackIcon";
 // import CrossIcon from "../../components/Icons/CrossIcon/CrossIcon";
 import Switcher from "../../components/Auth/Switcher/Switcher";
-import FormInput from "../../components/Auth/FormInput/FormInput";
 import {Link, Redirect} from "react-router-dom";
-import MessageLabel from "../../components/Auth/MessageLabel/MessageLabel";
+import ResetPasswordStepOne from "../../components/Auth/ResetPassword/ResetPasswordStepOne";
+import ResetPasswordStepTwo from "../../components/Auth/ResetPassword/ResetPasswordStepTwo";
+import ResetPasswordStepThree from "../../components/Auth/ResetPassword/ResetPasswordStepThree";
+import ResetPasswordSuccess from "../../components/Auth/ResetPassword/ResetPasswordSuccess";
+import {userActions} from "../../redux/actions/userActions";
 // import SocialAccounts from "../../components/Auth/SocialAccounts";
 
-const ResetPassword = ({status, resetPassword, setPageTitle, message}: ResetPasswordProps) => {
-    const [form] = Form.useForm();
-    const [done, setDone] = useState(false);
-
-    const onFinish = (values: any) => resetPassword(values);
-
-    useEffect(() => setPageTitle("Password Recovery"), [setPageTitle]);
+const ResetPassword = ({setPageTitle, step, changeMessage, changeStep}: ResetPasswordProps) => {
 
     useEffect(() => {
-        if (status) {
-            form.resetFields();
-            setDone(true);
-        }
-    }, [status, form]);
+        setPageTitle("Password Reset");
+        changeMessage('');
+    }, [setPageTitle]);
 
-    if (done) {
+    if (step === 3) {
+        changeStep(0, '');
         return <Redirect to={'/'}/>
+    }
+
+    const resetSteps = {
+        0: <ResetPasswordStepOne/>,
+        1: <ResetPasswordStepTwo/>,
+        2: <ResetPasswordStepThree/>,
+        3: <ResetPasswordSuccess/>
+    }
+
+    const getStep = (step: number) => {
+        return resetSteps[step];
     }
 
     return (
@@ -49,35 +54,7 @@ const ResetPassword = ({status, resetPassword, setPageTitle, message}: ResetPass
                         <Switcher link="/register" title="Register"/>
                     </div>
                     <div style={{marginTop: '30px'}}>
-                        <Form form={form} onFinish={onFinish}>
-                            <Form.Item className="text-center">
-                                <Typography.Text>
-                                    In order to reset your password, <br/>
-                                    you need to enter your username or email.
-                                </Typography.Text>
-                            </Form.Item>
-                            <Typography.Title level={3} style={{marginBottom: 25}}>Password Recovery</Typography.Title>
-                            {message !== "" ?
-                                <Form.Item>
-                                    <MessageLabel level={status ? 'success' : 'error'} message={message}/>
-                                </Form.Item>
-                                : null}
-                            <Form.Item name="username"
-                                       rules={[{required: true, message: "Please input your username"}]}>
-
-                                <FormInput label="Username or Email" type="text" name="username"
-                                           placeholder="Username or Email"/>
-                            </Form.Item>
-                            <Form.Item>
-                                <div className="form-context-q">
-                                    Didn't recieve the recovery link? <Link to="/register">Resend it</Link>
-                                </div>
-                            </Form.Item>
-
-                            <Form.Item style={{marginBottom: 0}}>
-                                <Button type="primary" size="large" htmlType="submit">Confirm</Button>
-                            </Form.Item>
-                        </Form>
+                        {getStep(step)}
                     </div>
                 </div>
             </div>
@@ -86,16 +63,17 @@ const ResetPassword = ({status, resetPassword, setPageTitle, message}: ResetPass
 };
 
 const mapStateToProps = (state: RootState) => {
-    const {operationStatus, message} = state.user;
+    const {operationStatus, resetStep} = state.user;
     return {
         status: operationStatus,
-        message: message
+        step: resetStep
     }
 };
 
 const mapDispatchToProps = {
-    resetPassword: userActions.resetPassword,
     setPageTitle: mainActions.setPageTitle,
+    changeMessage: userActions.changeMessage,
+    changeStep: userActions.changeResetStep
 }
 
 export default connect(

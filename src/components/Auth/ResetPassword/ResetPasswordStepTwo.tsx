@@ -1,37 +1,33 @@
 import React, {useState} from "react";
-import {Form, Input} from "antd";
-import {Button} from "antd";
-import MessageLabel from "../MessageLabel/MessageLabel";
-import {Link} from "react-router-dom";
 import {connect} from "react-redux";
+import {Form, Button, Input} from "antd";
+import {RootState} from "../../../redux/reducer";
 import {userActions} from "../../../redux/actions/userActions";
-import {RegisterStepTwoProps} from "../../../interfaces/auth/registration";
+import {ResetPasswordStepTwoProps} from "../../../interfaces/auth/resetPassword";
+import {mainActions} from "../../../redux/actions/mainActions";
+import {Link} from "react-router-dom";
+import MessageLabel from "../MessageLabel/MessageLabel";
 
 
-const RegisterStepTwo = ({
-                             id,
-                             register,
-                             isRegister,
-                             message,
-                             changeMessage,
-                             status,
-                             changeStep,
-                             activationFailed
-                         }: RegisterStepTwoProps) => {
+const ResetPasswordStepTwo = ({
+                                  resetPasswordStepTwo,
+                                  status,
+                                  resetId,
+                                  message,
+                                  changeResetStep,
+                                  changeMessage
+                              }: ResetPasswordStepTwoProps) => {
     const [form] = Form.useForm();
     const [code, setCode] = useState('      ');
     const [attempt, setAttempt] = useState(0);
 
     const onFinish = () => {
         if (validate(code)) {
-            register({activationCode: code, id});
+            resetPasswordStepTwo({code: code, resetId});
             setTimeout(() => {
                 if (!status) {
                     if (attempt < 1) setAttempt(attempt + 1);
-                    else {
-                        changeStep(0, "You've entered wrong verification code twice. Please try a new verification code.");
-                        activationFailed(id);
-                    }
+                    else changeResetStep(0, "You've entered wrong password reset code twice. Please try a new password reset code.");
                 }
             }, 1000);
         } else {
@@ -68,10 +64,10 @@ const RegisterStepTwo = ({
     return (
         <Form form={form} onFinish={onFinish}>
             {message !== "" ? (
-                <MessageLabel level={isRegister ? "success" : "error"} message={message}/>
+                <MessageLabel level={status ? "success" : "error"} message={message}/>
             ) : <MessageLabel
                 level="info"
-                message="Please check your email for six digit verification code"
+                message="Please check your email for six digit reset password code"
             />}
             <Form.Item name="code"
                        rules={[{required: true, message: "Type your code"}]}>
@@ -91,7 +87,6 @@ const RegisterStepTwo = ({
                     <Input id={"5"} type="number" size="large" className="digit-field" onChange={inputChange}
                            value={code[5]}/>
                 </Form.Item>
-
                 <div className="form-context-q">
                     Didn’t recieve the code? <Link to="/">Resend it</Link>
                 </div>
@@ -102,24 +97,22 @@ const RegisterStepTwo = ({
             </Form.Item>
         </Form>
     );
+}
 
-};
-
-const mapStateToProps = (state: any) => {
-    const {message, isRegister, id, status} = state.user;
+const mapStateToProps = (state: RootState) => {
+    const {operationStatus, resetId, message} = state.user;
     return {
-        message: message,
-        isRegister,
-        id,
-        status
-    };
+        status: operationStatus,
+        resetId,
+        message
+    }
 };
 
 const mapDispatchToProps = {
-    register: userActions.registerStepTwo,
+    resetPasswordStepTwo: userActions.resetPasswordStepTwo,
+    setPageTitle: mainActions.setPageTitle,
     changeMessage: userActions.changeMessage,
-    changeStep: userActions.changeStep,
-    activationFailed: userActions.activationFailed
-};
+    changeResetStep: userActions.changeResetStep
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterStepTwo);
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPasswordStepTwo);
