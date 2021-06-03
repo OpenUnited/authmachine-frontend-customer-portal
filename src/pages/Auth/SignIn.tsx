@@ -30,8 +30,7 @@ const SignIn = (props: SignInProps) => {
     useEffect(() => setPageTitle("Sign In"), [setPageTitle]);
 
     const onFinish = (values: any) => {
-        let nextUrl = new URLSearchParams(props.location.search).get("next");
-        if (nextUrl && process.env.REACT_APP_SERVER_URL) nextUrl = nextUrl.substr(nextUrl.indexOf('/', 7));
+        let nextUrl = localStorage.getItem('nextUrl') ? localStorage.getItem('nextUrl') : null;
         login(values, nextUrl);
     };
 
