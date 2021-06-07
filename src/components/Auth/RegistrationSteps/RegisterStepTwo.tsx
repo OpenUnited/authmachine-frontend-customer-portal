@@ -16,24 +16,15 @@ const RegisterStepTwo = ({
                              changeMessage,
                              status,
                              changeStep,
-                             activationFailed
+                             activationFailed,
+                             attempt
                          }: RegisterStepTwoProps) => {
     const [form] = Form.useForm();
     const [code, setCode] = useState('      ');
-    const [attempt, setAttempt] = useState(0);
 
     const onFinish = () => {
         if (validate(code)) {
-            register({activationCode: code, id});
-            setTimeout(() => {
-                if (!status) {
-                    if (attempt < 1) setAttempt(attempt + 1);
-                    else {
-                        changeStep(0, "You've entered wrong verification code twice. Please try a new verification code.");
-                        activationFailed(id);
-                    }
-                }
-            }, 1000);
+            register({activationCode: code, id, attempt});
         } else {
             changeMessage("Activation code is incorrect!");
         }
@@ -71,7 +62,7 @@ const RegisterStepTwo = ({
                 <MessageLabel level={isRegister ? "success" : "error"} message={message}/>
             ) : <MessageLabel
                 level="info"
-                message="Please check your email for six digit verification code"
+                message="Please check your email for six-digit code"
             />}
             <Form.Item name="code"
                        rules={[{required: true, message: "Type your code"}]}>
@@ -93,7 +84,10 @@ const RegisterStepTwo = ({
                 </Form.Item>
 
                 <div className="form-context-q">
-                    Didn’t recieve the code? <Link to="/">Resend it</Link>
+                    Didn’t recieve the code? <Link to="/register" onClick={() => {
+                        changeStep(0, '');
+                        activationFailed(id);
+                }}>Resend it</Link>
                 </div>
 
             </Form.Item>
@@ -106,12 +100,13 @@ const RegisterStepTwo = ({
 };
 
 const mapStateToProps = (state: any) => {
-    const {message, isRegister, id, status} = state.user;
+    const {message, isRegister, id, status, codeAttempt} = state.user;
     return {
         message: message,
         isRegister,
         id,
-        status
+        status,
+        attempt: codeAttempt
     };
 };
 

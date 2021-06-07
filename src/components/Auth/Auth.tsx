@@ -6,7 +6,6 @@ import {connect} from "react-redux";
 import SignIn from "../../pages/Auth/SignIn";
 import {AuthProps} from "../../interfaces/auth";
 import "./Auth.scss";
-import RecoveryPassword from "../../pages/Auth/RecoveryPassword";
 import ResetPassword from "../../pages/Auth/ResetPassword";
 // import Registration from "../../pages/Auth/Registration";
 import ActivateAccount from "../../pages/Auth/ActivateAccount";
@@ -42,7 +41,6 @@ const Auth = ({isAuthenticated, initialLink, usersExists}: AuthProps) => {
                 <Route exact path={["/", "/login"]} component={SignIn} />
                 <Route exact path="/register" component={RegistrationSteps} />
                 <Route exact path="/reset-password" component={ResetPassword} />
-                <Route exact path="/recovery-password/:token" component={RecoveryPassword} />
                 <Route exact path="/activation" component={ActivateAccount} />
                 <Route exact path="/activation-with-username" component={ActivateAccount} />
                 <Route exact path="/activation/:token" component={ActivateFinish} />

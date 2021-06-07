@@ -15,7 +15,7 @@ import RegisterStepThree from "../../components/Auth/RegistrationSteps/RegisterS
 import RegisterSuccess from "../../components/Auth/RegistrationSteps/RegisterSuccess";
 import {userActions} from "../../redux/actions/userActions";
 
-const RegistrationSteps = ({step, setPageTitle, changeMessage}: RegistrationStepsProps) => {
+const RegistrationSteps = ({step, setPageTitle, changeMessage, location}: RegistrationStepsProps) => {
 
     useEffect(() => {
         setPageTitle("Register");
@@ -28,6 +28,11 @@ const RegistrationSteps = ({step, setPageTitle, changeMessage}: RegistrationStep
         2: <RegisterStepThree/>,
         3: <RegisterSuccess/>
     }
+
+    useEffect(() => {
+        let nextUrl = new URLSearchParams(location.search).get("next");
+        if (nextUrl) localStorage.setItem("nextUrl", nextUrl);
+    }, [location]);
 
     const getStepForm = (step: number) => {
         return stepForms[step];

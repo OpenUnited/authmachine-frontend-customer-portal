@@ -226,9 +226,10 @@ const registerStepOne = (values: {
 
 const registerStepTwo = (values: {
     id: string
-    activationCode: string
+    activationCode: string,
+    attempt: number
 }) => {
-    const {id, activationCode} = values;
+    const {id, activationCode, attempt} = values;
     return (dispatch: AppDispatch) => {
         let query = `mutation {
           registerStepTwo(input: {
@@ -254,6 +255,19 @@ const registerStepTwo = (values: {
             (result: any) => {
                 let {success, message, userId} = result.data.registerStepTwo;
                 setRegisterStepTwo(success, message, userId);
+                if (!success) {
+                    if (attempt >= 1) {
+                        // @ts-ignore
+                        dispatch(userActions.activationFailed(id));
+                        // @ts-ignore
+                        dispatch(userActions.changeStep(0, 'Please try a new verification code.'));
+                        // @ts-ignore
+                        dispatch(userActions.changeAttempt(0));
+                    } else {
+                        // @ts-ignore
+                        dispatch(userActions.changeAttempt(attempt + 1));
+                    }
+                }
             },
             (error: any) => {
                 error = request.isServerError(error);
@@ -278,6 +292,9 @@ const registerStepThree = (values: {
             success, message
           }
         }`;
+
+        // @ts-ignore
+        dispatch(userActions.changeAttempt(0));
 
         const setRegisterStepThree = (status: boolean, message: string) =>
             dispatch({
@@ -306,6 +323,16 @@ const registerStepThree = (values: {
             });
     }
 };
+
+const changeAttempt = (attempt: number) => {
+    return (dispatch: AppDispatch) => {
+        dispatch(
+            {
+                type: userTypes.CHANGE_ATTEMPT,
+                attempt
+            });
+    }
+}
 
 const activationFailed = (userId: string) => {
     return (dispatch: AppDispatch) => {
@@ -355,7 +382,6 @@ const resetPasswordStepOne = (values: { username: string }) => {
             query,
             (result: any) => {
                 let {success, message, resetId} = result.data.resetPasswordStepOne;
-                console.log(result.data);
                 setResetStatus(success, message, resetId);
             },
             (error: any) => {
@@ -365,8 +391,8 @@ const resetPasswordStepOne = (values: { username: string }) => {
     }
 };
 
-const resetPasswordStepTwo = (values: { resetId: string, code: string }) => {
-    const {resetId, code} = values;
+const resetPasswordStepTwo = (values: { resetId: string, code: string, attempt: number }) => {
+    const {resetId, code, attempt} = values;
     return (dispatch: AppDispatch) => {
         let query = `mutation {
           resetPasswordStepTwo(input: {
@@ -392,6 +418,17 @@ const resetPasswordStepTwo = (values: { resetId: string, code: string }) => {
             (result: any) => {
                 let {success, message, resetId} = result.data.resetPasswordStepTwo;
                 setResetStatus(success, message, resetId);
+                if (!success) {
+                    if (attempt >= 1) {
+                        // @ts-ignore
+                        dispatch(userActions.changeResetStep(0, 'Please try a new verification code.'));
+                        // @ts-ignore
+                        dispatch(userActions.changeAttempt(0));
+                    } else {
+                        // @ts-ignore
+                        dispatch(userActions.changeAttempt(attempt + 1));
+                    }
+                }
             },
             (error: any) => {
                 error = request.isServerError(error);
@@ -400,7 +437,7 @@ const resetPasswordStepTwo = (values: { resetId: string, code: string }) => {
     }
 };
 
-const resetPasswordStepThree = (values: { resetId: string, password: string, confirmPassword: string }) => {
+const resetPasswordStepThree = (values: { resetId: string, password: string, confirmPassword: string }, nextUrl: string | null) => {
     const {resetId, password, confirmPassword} = values;
     return (dispatch: AppDispatch) => {
         let query = `mutation {
@@ -409,9 +446,12 @@ const resetPasswordStepThree = (values: { resetId: string, password: string, con
             password: "${password}",
             confirmPassword: "${confirmPassword}"
           }) {
-            success, message
+            success, message, username
           }
         }`;
+
+        // @ts-ignore
+        dispatch(userActions.changeAttempt(0));
 
         const setResetStatus = (status: boolean, message: string) =>
             dispatch({
@@ -425,8 +465,14 @@ const resetPasswordStepThree = (values: { resetId: string, password: string, con
             dispatch,
             query,
             (result: any) => {
-                let {success, message} = result.data.resetPasswordStepThree;
+                let {success, message, username} = result.data.resetPasswordStepThree;
                 setResetStatus(success, message);
+                if (success) {
+                    setTimeout(() => {
+                        // @ts-ignore
+                        dispatch(userActions.login({username, password, remember: false}, nextUrl));
+                    }, 1000);
+                }
             },
             (error: any) => {
                 error = request.isServerError(error);
@@ -877,5 +923,6 @@ export const userActions = {
     changeStep,
     register,
     changeResetStep,
-    activationFailed
+    activationFailed,
+    changeAttempt
 };

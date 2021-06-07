@@ -22,7 +22,7 @@ const ResetPassword = ({setPageTitle, step, changeMessage, changeStep}: ResetPas
         changeMessage('');
     }, [setPageTitle]);
 
-    if (step === 3) {
+    if (step > 3) {
         changeStep(0, '');
         return <Redirect to={'/'}/>
     }

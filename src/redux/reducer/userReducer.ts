@@ -31,7 +31,8 @@ type UserState = {
     createAdminUserData: infoStatusResponse,
     userId: string,
     resetStep: number,
-    resetId: string
+    resetId: string,
+    codeAttempt: number
 }
 
 const initialState: UserState = {
@@ -58,7 +59,8 @@ const initialState: UserState = {
     createAdminUserData: emptyMessage,
     userId: "",
     resetStep: 0,
-    resetId: ""
+    resetId: "",
+    codeAttempt: 0
 }
 
 type ActionType = {
@@ -73,7 +75,8 @@ type ActionType = {
     infoStatus: { status: boolean, message: string },
     step: number,
     resetStep: number,
-    resetId: string
+    resetId: string,
+    attempt?: number
 }
 
 const userReducer = (state = initialState, action: ActionType) => {
@@ -230,6 +233,11 @@ const userReducer = (state = initialState, action: ActionType) => {
                 ...state,
                 resetStep: action.resetStep,
                 message: action.message
+            }
+        case userTypes.CHANGE_ATTEMPT:
+            return {
+                ...state,
+                codeAttempt: action.attempt
             }
         default:
             return state;

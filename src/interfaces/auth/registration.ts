@@ -15,7 +15,10 @@ interface RegistrationStepsProps {
     isRegister: boolean,
     step: number,
     setPageTitle: (pageTitle: string) => void,
-    changeMessage: (message: string) => void
+    changeMessage: (message: string) => void,
+    location: {
+        search: string,
+    },
 }
 
 interface RegisterStepOneProps {
@@ -32,8 +35,10 @@ interface RegisterStepTwoProps {
     status: boolean,
     register: (values: {
         id: string,
-        activationCode: string
+        activationCode: string,
+        attempt: number
     }) => void,
+    attempt: number
     isRegister: boolean,
     message: string,
     id: string,
