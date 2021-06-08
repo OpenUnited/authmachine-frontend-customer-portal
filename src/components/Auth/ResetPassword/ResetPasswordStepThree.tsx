@@ -76,13 +76,15 @@ const ResetPasswordStepThree = ({
             <Form form={form} onFinish={onFinish}>
                 <Form.Item name="password"
                            rules={[{required: true, message: "Please input your password"}]}>
-                    <FormInput label="Password" type="password" name="password" placeholder="Choose password"
+                    <FormInput label="Password" value={form.getFieldValue('password')} type="password" name="password"
+                               placeholder="Choose password"
                                onChange={onChangePassword}/>
                     <PasswordChecker level={passwordLevel} display={passwordCheckerStatus}/>
                 </Form.Item>
                 <Form.Item name="confirmPassword"
                            rules={[{required: true, message: "Please confirm a password"}]}>
-                    <FormInput label="Confirm password" type="password" name="password" placeholder="Confirm password"/>
+                    <FormInput label="Confirm password" value={form.getFieldValue('confirmPassword')} type="password"
+                               name="confirmPassword" placeholder="Confirm password"/>
                 </Form.Item>
                 <Form.Item style={{marginBottom: 0}}>
                     <Button type="primary" size="large" htmlType="submit">Submit New Password</Button>

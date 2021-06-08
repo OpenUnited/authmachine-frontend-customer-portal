@@ -6,4 +6,5 @@ export interface FormInputInterface {
     placeholder: string,
     type: string,
     onChange?: (e:React.FormEvent<HTMLInputElement>) => void,
+    value: string
 }

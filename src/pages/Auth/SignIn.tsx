@@ -95,12 +95,12 @@ const SignIn = (props: SignInProps) => {
 
                             <Form.Item name="username"
                                        rules={[{required: true, message: "Please input your username"}]}>
-                                <FormInput label="Username or Email" type="text" name="usernameOrEmail"
+                                <FormInput value={form.getFieldValue('usernameOrEmail')} label="Username or Email" type="text" name="usernameOrEmail"
                                            placeholder="Username or Email"/>
                             </Form.Item>
                             <Form.Item name="password"
                                        rules={[{required: true, message: "Please input your password"}]}>
-                                <FormInput label="Password" type="password" name="password" placeholder="Password"/>
+                                <FormInput value={form.getFieldValue('password')} label="Password" type="password" name="password" placeholder="Password"/>
                             </Form.Item>
 
                             <Form.Item name="remember" valuePropName="checked" className="space-between">

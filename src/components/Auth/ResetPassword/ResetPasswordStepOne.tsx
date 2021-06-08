@@ -36,7 +36,7 @@ const ResetPasswordStepOne = ({status, resetPasswordStepOne, message}: ResetPass
             <Form.Item name="username"
                        rules={[{required: true, message: "Please input your username"}]}>
 
-                <FormInput label="Username or Email" type="text" name="username"
+                <FormInput value={form.getFieldValue('username')} label="Username or Email" type="text" name="username"
                            placeholder="Username or Email"/>
             </Form.Item>
             <Form.Item>

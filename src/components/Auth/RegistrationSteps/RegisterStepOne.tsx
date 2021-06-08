@@ -31,14 +31,14 @@ const RegisterStepOne = ({register, isRegister, message, status}: RegisterStepOn
                     {required: true, message: "Please input your first name"},
                 ]}
             >
-                <FormInput label="First name" type="text" name="firstName" placeholder="First name"/>
+                <FormInput label="First name" value={form.getFieldValue('firstName')} type="text" name="firstName" placeholder="First name"/>
             </Form.Item>
 
             <Form.Item style={{marginTop: 20}}
                 name="email"
                 rules={[{required: true, message: "Please input your email"}]}
             >
-                <FormInput label="Email" name="email" placeholder={"Email"} type={"email"}/>
+                <FormInput label="Email" name="email" placeholder={"Email"} value={form.getFieldValue('email')} type={"email"}/>
             </Form.Item>
 
             <Form.Item>
