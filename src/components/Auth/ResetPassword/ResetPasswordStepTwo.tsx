@@ -65,7 +65,7 @@ const ResetPasswordStepTwo = ({
             />}
             <Form.Item name="code"
                        rules={[{required: true, message: "Type your code"}]}>
-                <div className="form-title">Six digits code</div>
+                <div className="form-title">Six-digit code</div>
 
                 <Form.Item className="space-between">
                     <Input id={"0"} type="number" autoFocus={true} size="large" className="digit-field"
