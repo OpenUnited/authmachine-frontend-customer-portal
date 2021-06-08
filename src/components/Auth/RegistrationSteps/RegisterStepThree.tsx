@@ -15,6 +15,7 @@ const RegisterStepThree = ({register, isRegister, message, changeMessage, id, st
     const [form] = Form.useForm();
     const [passwordLevel, setPasswordLevel] = useState('');
     const [passwordCheckerStatus, setPasswordCheckedStatus] = useState(false);
+    const [msg, setMsg] = useState(true);
 
     const onFinish = (values: any) => {
         if (passwordLevel !== 'medium' && passwordLevel !== 'strong') {
@@ -37,9 +38,15 @@ const RegisterStepThree = ({register, isRegister, message, changeMessage, id, st
     };
 
     const onChangeUsername = (e: React.FormEvent<HTMLInputElement>) => {
-        const username = e.currentTarget.value
-        if (!checkUsername(username)) changeMessage('Username should contain only lowercase letters and digits');
-        else form.setFieldsValue({username});
+        const username = e.currentTarget.value;
+        if (!checkUsername(username)) {
+            if(msg) setMsg(false);
+            changeMessage('Username should contain only lowercase letters and digits');
+        }
+        else {
+            changeMessage('');
+            form.setFieldsValue({username});
+        }
     }
 
     const checkUsername = (username: string) => {
@@ -74,8 +81,9 @@ const RegisterStepThree = ({register, isRegister, message, changeMessage, id, st
     return (
         <Form form={form} onFinish={onFinish}>
             <Form.Item>
-                {message !== "" ? <MessageLabel level='error' message={message}/> :
-                    <MessageLabel level="success" message="Email verified! Please set your username and password."/>}
+                {message !== "" ? <MessageLabel level='error' message={message}/> : msg ?
+                    <MessageLabel level="success" message="Email verified! Please set your username and password."/>
+                    : null}
             </Form.Item>
             <Form.Item name="username"
                        rules={[{required: true, message: "Please input username"}]}>
