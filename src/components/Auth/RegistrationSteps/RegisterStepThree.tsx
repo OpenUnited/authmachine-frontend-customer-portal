@@ -21,9 +21,11 @@ const RegisterStepThree = ({register, isRegister, message, changeMessage, id, st
             changeMessage("Password is too weak!");
         } else if (values.password !== values.confirmPassword) {
             changeMessage("The passwords entered do not match!");
+        } else if (!checkUsername(values.username)) {
+            changeMessage('Username should contain only lowercase letters and digits');
         } else {
             let nextUrl = localStorage.getItem('nextUrl') ? localStorage.getItem('nextUrl') : null;
-            register({...values, userId: id}, nextUrl);
+            register({username: values.username, password: values.password, userId: id}, nextUrl);
         }
     };
 
@@ -33,6 +35,16 @@ const RegisterStepThree = ({register, isRegister, message, changeMessage, id, st
         setPasswordCheckedStatus(true);
         form.setFieldsValue({password: e.currentTarget.value});
     };
+
+    const onChangeUsername = (e: React.FormEvent<HTMLInputElement>) => {
+        const username = e.currentTarget.value
+        if (!checkUsername(username)) changeMessage('Username should contain only lowercase letters and digits');
+        else form.setFieldsValue({username});
+    }
+
+    const checkUsername = (username: string) => {
+        return /^[a-z0-9]*$/.test(username);
+    }
 
     const checkPassword = (password: string) => {
         switch (true) {
@@ -59,12 +71,6 @@ const RegisterStepThree = ({register, isRegister, message, changeMessage, id, st
         return /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>_-])(?=.{8,})/.test(password);
     };
 
-    // const onChangeConfirmPassword = (e: React.FormEvent<HTMLInputElement>) => {
-    //     if (form.getFieldValue('password') === e.currentTarget.value) {
-    //         changeMessage("The passwords entered do not match");
-    //     }
-    // };
-
     return (
         <Form form={form} onFinish={onFinish}>
             <Form.Item>
@@ -73,17 +79,18 @@ const RegisterStepThree = ({register, isRegister, message, changeMessage, id, st
             </Form.Item>
             <Form.Item name="username"
                        rules={[{required: true, message: "Please input username"}]}>
-                <FormInput label="Choose username" type="text" name="username" placeholder="Choose username"/>
+                <FormInput label="Choose username" type="text" value={form.getFieldValue('username')} name="username" placeholder="Choose username"
+                           onChange={onChangeUsername}/>
             </Form.Item>
             <Form.Item name="password"
                        rules={[{required: true, message: "Please input your password"}]}>
-                <FormInput label="Password" type="password" name="password" placeholder="Choose password"
+                <FormInput label="Password" type="password" value={form.getFieldValue('password')} name="password" placeholder="Choose password"
                            onChange={onChangePassword}/>
                 <PasswordChecker level={passwordLevel} display={passwordCheckerStatus}/>
             </Form.Item>
             <Form.Item name="confirmPassword"
                        rules={[{required: true, message: "Please confirm a password"}]}>
-                <FormInput label="Confirm password" type="password" name="password" placeholder="Confirm password"/>
+                <FormInput label="Confirm password" value={form.getFieldValue('confirmPassword')} type="password" name="confirmPassword" placeholder="Confirm password"/>
             </Form.Item>
 
             <PrivacyPolicies form={form} formType="activation"/>
