@@ -45,15 +45,18 @@ const RegistrationSteps = ({step, setPageTitle, changeMessage, location}: Regist
             {/*    <CrossIcon/>*/}
             {/*</div>*/}
             <div className="form-content">
-                <div className="text-center">
-                    <img src={Logo} alt="AuthMachine" className="logo"/>
-                </div>
+                <a href={"https://openunited.com/"}>
+                    <div className="text-center">
+                        <img src={Logo} alt="AuthMachine" className="logo"/>
+                    </div>
+                </a>
                 <div>
                     <div className="space-between sign-type-panel">
                         <Switcher link="/" title="Sign In"/>
                         <Switcher link="/register" active title="Register"/>
                     </div>
-                    <StepWidget step={step} first={step === 1 || step === 2 || step === 3} second={step === 2 || step === 3} third={step === 3}/>
+                    <StepWidget step={step} first={step === 1 || step === 2 || step === 3}
+                                second={step === 2 || step === 3} third={step === 3}/>
                     <div style={{marginTop: '30px'}}>
                         {getStepForm(step)}
                     </div>

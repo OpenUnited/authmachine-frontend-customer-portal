@@ -8,8 +8,8 @@ import {AuthProps} from "../../interfaces/auth";
 import "./Auth.scss";
 import ResetPassword from "../../pages/Auth/ResetPassword";
 // import Registration from "../../pages/Auth/Registration";
-import ActivateAccount from "../../pages/Auth/ActivateAccount";
-import ActivateFinish from "../../pages/Auth/ActivateFinish";
+// import ActivateAccount from "../../pages/Auth/ActivateAccount";
+// import ActivateFinish from "../../pages/Auth/ActivateFinish";
 import ActivateLicense from "../../pages/Auth/ActivateLicense";
 import NewLicense from "../../pages/Auth/NewLicense";
 import CreateAdminUser from "../../pages/Auth/CreateAdminUser";
@@ -41,9 +41,9 @@ const Auth = ({isAuthenticated, initialLink, usersExists}: AuthProps) => {
                 <Route exact path={["/", "/login"]} component={SignIn} />
                 <Route exact path="/register" component={RegistrationSteps} />
                 <Route exact path="/reset-password" component={ResetPassword} />
-                <Route exact path="/activation" component={ActivateAccount} />
-                <Route exact path="/activation-with-username" component={ActivateAccount} />
-                <Route exact path="/activation/:token" component={ActivateFinish} />
+                {/*<Route exact path="/activation" component={ActivateAccount} />*/}
+                {/*<Route exact path="/activation-with-username" component={ActivateAccount} />*/}
+                {/*<Route exact path="/activation/:token" component={ActivateFinish} />*/}
                 <Route exact path="/license-activation" component={ActivateLicense} />
                 <Route exact path="/new-license" component={NewLicense} />
                 <Route exact path="/new-admin-user" component={CreateAdminUser} />

@@ -45,9 +45,11 @@ const ResetPassword = ({setPageTitle, step, changeMessage, changeStep}: ResetPas
             {/*    <CrossIcon/>*/}
             {/*</div>*/}
             <div className="form-content">
-                <div className="text-center">
-                    <img src={Logo} alt="AuthMachine" className="logo"/>
-                </div>
+                <a href={"https://openunited.com/"}>
+                    <div className="text-center">
+                        <img src={Logo} alt="AuthMachine" className="logo"/>
+                    </div>
+                </a>
                 <div>
                     <div className="space-between sign-type-panel">
                         <Switcher link="/" active title="Sign In"/>
