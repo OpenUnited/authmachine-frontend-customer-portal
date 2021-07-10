@@ -3,7 +3,7 @@
     height: 26px;
 }
 .auth-page-container .form-container .logo {
-    content: url("../custom-brand/assets/images/open-united-logo.svg");
+    margin-bottom: 22px !important;
 }
 .logo-header img.small-logo {
     content: url("../custom-brand/assets/images/open-united-sm-logo.png");

@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import Logo from "../../staticfiles/images/logo.png"
+import Logo from "../../components/Auth/Logo";
 import {Form, Input, Checkbox, Button, Alert} from "antd";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
@@ -75,9 +75,7 @@ const SignIn = (props: SignInProps) => {
             {/*    <CrossIcon/>*/}
             {/*</div>*/}
             <div className="form-content">
-                <div className="text-center">
-                    <img src={Logo} alt="AuthMachine" className="logo"/>
-                </div>
+                <Logo />
                 <div>
                     <div className="space-between sign-type-panel">
                         <Switcher link="/" active title="Sign In"/>

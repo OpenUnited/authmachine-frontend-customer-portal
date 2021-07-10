@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import Logo from "../../staticfiles/images/logo.png";
+import Logo from "../../components/Auth/Logo";
 import StepWidget from "../../components/Auth/StepSwitcher/StepSwitcher";
 import Switcher from "../../components/Auth/Switcher/Switcher";
 import {RegistrationStepsProps} from "../../interfaces/auth/registration";
@@ -45,9 +45,7 @@ const RegistrationSteps = ({step, setPageTitle, changeMessage, location}: Regist
             {/*    <CrossIcon/>*/}
             {/*</div>*/}
             <div className="form-content">
-                <div className="text-center">
-                    <img src={Logo} alt="AuthMachine" className="logo"/>
-                </div>
+                <Logo />
                 <div>
                     <div className="space-between sign-type-panel">
                         <Switcher link="/" title="Sign In"/>

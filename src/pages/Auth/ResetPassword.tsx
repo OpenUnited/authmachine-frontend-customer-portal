@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import Logo from "../../staticfiles/images/logo.png"
+import Logo from "../../components/Auth/Logo";
 import {RootState} from "../../redux/reducer";
 import {ResetPasswordProps} from "../../interfaces/auth/resetPassword";
 import {mainActions} from "../../redux/actions/mainActions";
@@ -45,9 +45,7 @@ const ResetPassword = ({setPageTitle, step, changeMessage, changeStep}: ResetPas
             {/*    <CrossIcon/>*/}
             {/*</div>*/}
             <div className="form-content">
-                <div className="text-center">
-                    <img src={Logo} alt="AuthMachine" className="logo"/>
-                </div>
+                <Logo />
                 <div>
                     <div className="space-between sign-type-panel">
                         <Switcher link="/" active title="Sign In"/>

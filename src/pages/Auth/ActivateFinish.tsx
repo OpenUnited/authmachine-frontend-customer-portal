@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import Logo from "../../staticfiles/images/logo.png"
+import Logo from "../../components/Auth/Logo";
 import {Spin} from "antd";
 import {RootState} from "../../redux/reducer";
 import {userActions} from "../../redux/actions/userActions";
@@ -53,9 +53,7 @@ const ActivateFinish = ({status, message, finishActivation, match, setPageTitle,
     return (
         <div className="form-container">
             <div className="form-content">
-                <div className="text-center">
-                    <img src={Logo} alt="AuthMachine" className="logo" />
-                </div>
+                <Logo />
                 <div className="text-center">
                     {loading && <Spin size="large" spinning={loading} />}
                 </div>

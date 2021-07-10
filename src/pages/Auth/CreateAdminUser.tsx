@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import Logo from "../../staticfiles/images/logo.png"
+import Logo from "../../components/Auth/Logo";
 import {Form, Input, Typography, Button, Alert} from "antd";
 import {userActions} from "../../redux/actions/userActions";
 import {connect} from "react-redux";
@@ -74,9 +74,7 @@ const CreateAdminUser = ({message, operationStatus, createAdminUser, setPageTitl
     return (
         <div className="form-container">
             <div className="form-content">
-                <div className="text-center">
-                    <img src={Logo} alt="AuthMachine" className="logo" />
-                </div>
+                <Logo />
                 <Typography.Title level={3}>Create Admin User</Typography.Title>
                 <Form form={form} onFinish={onFinish} initialValues={{username: "admin"}}>
                     <Form.Item name="username"

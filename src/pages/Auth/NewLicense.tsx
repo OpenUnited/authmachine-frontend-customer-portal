@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import Logo from "../../staticfiles/images/logo.png"
+import Logo from "../../components/Auth/Logo";
 import {Form, Input, Typography, Button, Alert, Radio} from "antd";
 import { Link } from "react-router-dom";
 import {RootState} from "../../redux/reducer";
@@ -19,9 +19,7 @@ const NewLicense = ({setPageTitle, requestNewLicense, newLicenseData}: newLicens
     return (
         <div className="form-container auth-form">
             <div className="form-content">
-                <div className="text-center">
-                    <img src={Logo} alt="AuthMachine" className="logo" />
-                </div>
+                <Logo />
                 <Typography.Title level={3}>Request new license</Typography.Title>
                 <Form form={form} onFinish={onFinish} layout="vertical">
                     <Form.Item name="licenseType"

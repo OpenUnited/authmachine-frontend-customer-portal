@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import Logo from "../../staticfiles/images/logo.png"
+import Logo from "../../components/Auth/Logo";
 import {Form, Input, Typography, Button, Steps, Alert} from "antd";
 import { Link } from "react-router-dom";
 import {CheckCircleOutlined, SolutionOutlined, UserOutlined} from "@ant-design/icons";
@@ -45,9 +45,7 @@ const ActivateAccount = (props: ActivateAccountProps) => {
     return (
         <div className="form-container auth-form">
             <div className="form-content">
-                <div className="text-center">
-                    <img src={Logo} alt="AuthMachine" className="logo" />
-                </div>
+                <Logo />
                 <Typography.Title level={3}>Activate Account</Typography.Title>
                 <Steps style={{marginBottom: 20}} current={current}>
                     <Step title="Activation" icon={<UserOutlined />} />
